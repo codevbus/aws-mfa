@@ -1,3 +1,4 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/codevbus/aws-mfa)](https://goreportcard.com/report/github.com/codevbus/aws-mfa)
 # aws-mfa
 
 aws-mfa is a simple CLI application written in Golang for handling AWS CLI MFA authentication.
