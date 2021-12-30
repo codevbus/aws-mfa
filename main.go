@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -200,12 +201,29 @@ func main() {
 		}
 	}
 
+
 	// Get MFA token from user
 	token, err := stscreds.StdinTokenProvider()
 
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	// Use regex to validate a 6 digit number and catch
+	// malformed input without wasting an API call
+
+	tokenmatch, _ := regexp.MatchString(`^\d{6}$`, token)
+
+	for !tokenmatch {
+		fmt.Println("Please enter a valid 6 digit token")
+
+		token, err = stscreds.StdinTokenProvider()
+
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
 
 	// Perform authentication
 	Authenticate(profile, mfa, token, credfile, configfile, _sts, awsconfig, awscreds)
